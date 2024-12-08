@@ -1,4 +1,4 @@
-import application.service.FooBarQuixService;
+import com.foo.bar.batch.data_batch_processor.application.service.FooBarQuixService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FooBarQuixServiceTest {
