@@ -1,4 +1,4 @@
-package application.service;
+package com.foo.bar.batch.data_batch_processor.application.service;
 
 import org.springframework.stereotype.Service;
 
