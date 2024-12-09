@@ -13,6 +13,7 @@ import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.transform.LineAggregator;
 import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +28,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing
 public class FooBarQuixBatchConfig {
+
+    @Value("${batch.input}")
+    private String inputPath;
+
+    @Value("${batch.output}")
+    private String outputPath;
+
 
     private final FooBarQuixService fooBarQuixService;
 
@@ -49,7 +57,7 @@ public class FooBarQuixBatchConfig {
     public FlatFileItemReader<String> reader() {
         return new FlatFileItemReaderBuilder<String>()
                 .name("numberReader")
-                .resource(new FileSystemResource("input.txt"))
+                .resource(new FileSystemResource(inputPath))
                 .lineMapper((line, lineNumber) -> line.trim())
                 .build();
     }
@@ -69,7 +77,7 @@ public class FooBarQuixBatchConfig {
     @Bean
     public FlatFileItemWriter<String> writer() {
         FlatFileItemWriter<String> writer = new FlatFileItemWriter<>();
-        writer.setResource(new FileSystemResource("output.txt"));
+        writer.setResource(new FileSystemResource(outputPath));
         LineAggregator<String> lineAggregator = new PassThroughLineAggregator<>();
         writer.setLineAggregator(lineAggregator);
         return writer;

@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  data-batch-processor:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:fooBarQuixdb;DB_CLOSE_DELAY=-1
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2-console
+      - SPRING_BATCH_JDBC_INITIALIZE_SCHEMA=always
+      - BATCH_INPUT=${BATCH_INPUT:-/input/input.txt}
+      - BATCH_OUTPUT=${BATCH_OUTPUT:-/output/output.txt}
+    volumes:
+      - ${INPUT_FILE_PATH:-./input.txt}:/input/input.txt
+      - ${OUTPUT_DIR_PATH:-D:/kata-FooBarQuix}:/output
+
+  h2-database:
+    image: "buildo/h2database"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:fooBarQuixdb;DB_CLOSE_DELAY=-1
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=
+    ports:
+      - "8082:8082"
