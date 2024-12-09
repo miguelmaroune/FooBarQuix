@@ -20,12 +20,6 @@ public class GlobalExceptionHandler {
         LOG.error("Invalid Param!");
         return String.valueOf(new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        String errorMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         String errorMessage = ex.getMessage();
