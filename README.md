@@ -105,3 +105,68 @@ java -jar target/data-batch-processor-0.0.1-SNAPSHOT.jar
 | Endpoint                                              | Method | Description                                      | Example Output                                   |
 |-------------------------------------------------------|--------|-------------------------------------------------|--------------------------------------------------|
 | /api/transform/{number}	| GET   | Transforms the given number into its Foobarquix string representation.| `3` |
+
+### Testing
+Run Unit Tests
+You can execute the unit tests using:
+```bash
+mvn test -Dtest=**/*Test
+```
+### Test Coverage:
+- **Service Layer**: Ensures the correctness of business logic.
+
+## Dockerization
+
+The Foobarquix application utilizes Docker for simplified deployment and scalability. Below is a summary of the Docker setup and instructions for running the application locally:
+
+**Docker Compose**
+
+The docker-compose.yml file includes two primary services:
+
+1. ***data-batch-processor:***
+  - Description: This service runs the Spring Boot application for Foobarquix transformation.
+  - Ports: Maps port 8080 on the host to the internal port of the application container.
+  - Environment Variables:
+       - SPRING_DATASOURCE_URL, SPRING_DATASOURCE_DRIVER_CLASS_NAME, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD configure the in-memory H2 database.
+       - BATCH_INPUT and BATCH_OUTPUT define paths for input and output files used by the Foobarquix logic.
+  - Volumes: 
+       -  Binds the input.txt file from the host to /input/input.txt within the container for reading.
+       -  Maps the output directory on the host to /output for writing results.
+  -  h2-database:
+      -  Description: Provides an embedded H2 database for the Spring Boot application during local development.
+      - Ports: Exposes the H2 console on port 8082 for database management.  
+
+**Running Locally**
+
+1. ***Setup:***
+ - Clone the repository: git clone https://github.com/miguelmaroune/Foobarquix.git
+ - Navigate into the project directory: cd Foobarquix/docker 
+
+2. ***Start Service:***
+ - Run docker-compose up --build from the root of the project to start both services defined in the docker-compose.yml.
+ - This command builds the necessary Docker images and starts the containers.
+
+3.***Using the Application:***
+ - Place your input.txt file in the root directory of the project.
+ - The application will automatically use this file as input and output the results to output.txt.
+
+4.***Access:*** 
+- The Foobarquix application can be accessed at http://localhost:8080.
+- The H2 database console is available at http://localhost:8082/h2-console for managing database interactions.
+
+5. ***Configuration Overrides***
+ - Environment variables in docker-compose.yml can be customized via a .env file if needed:
+ ``` 
+INPUT_FILE_PATH=./input.txt
+OUTPUT_DIR_PATH=/path/to/output
+
+ ```
+ - This allows for easy adjustments without modifying the Docker Compose file directly.
+
+6. ***Stopping Services:***
+
+```
+docker-compose down
+```
+---
+
