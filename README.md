@@ -102,7 +102,7 @@ java -jar target/data-batch-processor-0.0.1-SNAPSHOT.jar
 
 ---
 ### API Documentation
-| Endpoint                                              | Method | Description                                      | Example Output                                   |
+| Endpoint                                              | Method | Description                                      | Example Input                                   |
 |-------------------------------------------------------|--------|-------------------------------------------------|--------------------------------------------------|
 | /api/transform/{number}	| GET   | Transforms the given number into its Foobarquix string representation.| `3` |
 
@@ -132,9 +132,6 @@ The docker-compose.yml file includes two primary services:
   - Volumes: 
        -  Binds the input.txt file from the host to /input/input.txt within the container for reading.
        -  Maps the output directory on the host to /output for writing results.
-  -  h2-database:
-      -  Description: Provides an embedded H2 database for the Spring Boot application during local development.
-      - Ports: Exposes the H2 console on port 8082 for database management.  
 
 **Running Locally**
 
