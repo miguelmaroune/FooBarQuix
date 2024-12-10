@@ -54,11 +54,13 @@ Example transformations:
 /api/transform/73 returns FOOQUIX
 Input Validation:
 
- 2. The application uses a **custom annotation**, @ValidNumber, to validate input numbers between 0 and 100.
+ 2. **spring batch FooBarQuix Processor** This Spring Batch application runs every minute, processes an input.txt file, and generates an output.txt file. Each line of input is passed to the FooBarQuix service for processing. The job is scheduled automatically and ensures seamless file-based data processing.
+    
+ 3. The application uses a **custom annotation**, @ValidNumber, to validate input numbers between 0 and 100.
 This ensures that only valid inputs are processed by the Foobarquix transformation logic.
 Global Exception Handling:
 
-3. The application includes a **global exception handler** that gracefully handles invalid inputs and other runtime errors.
+4. The application includes a **global exception handler** that gracefully handles invalid inputs and other runtime errors.
 ConstraintViolationException and MethodArgumentTypeMismatchException are managed to return appropriate error messages and HTTP status codes.
 
 ---
